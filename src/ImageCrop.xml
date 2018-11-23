@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<widget id="com.mendix.widget.custom.imagecrop.ImageCrop" needsEntityContext="true" offlineCapable="true" xmlns="http://www.mendix.com/widget/1.0/">
+    <name>Image crop</name>
+    <description>Crops images</description>
+    <icon/>
+    <properties>
+        <property key="message" type="string" required="false">
+            <caption>Message</caption>
+            <category>Data source</category>
+            <description/>
+        </property>
+    </properties>
+</widget>

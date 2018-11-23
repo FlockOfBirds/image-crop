@@ -2,7 +2,7 @@
   "name": "imagecrop",
   "widgetName": "ImageCrop",
   "version": "1.0.0",
-  "description": "Crops images",
+  "description": "A responsive image cropping tool for Mendix",
   "copyright": "FOB 2018",
   "author": "FoB",
   "scripts": {

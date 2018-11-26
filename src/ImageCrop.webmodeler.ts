@@ -1,13 +1,10 @@
 import { Component, createElement } from "react";
-import ImageCrop, { ImageCropProps } from "./components/ImageCrop";
+import { ImageCrop, ImageCropProps } from "./components/ImageCrop";
 import { ImageCropContainerProps } from "./components/ImageCropContainer";
 
 declare function require(name: string): string;
 
-const image = "base64-image-loader!./img/imageviewerpreview.png";
-type VisibilityMap = {
-    [P in keyof ImageCropContainerProps]: boolean;
-};
+// const image = "base64-image-loader!./img/imageviewerpreview.png";
 
 // tslint:disable-next-line class-name
 export class preview extends Component<ImageCropContainerProps> {
@@ -17,9 +14,7 @@ export class preview extends Component<ImageCropContainerProps> {
 
     private transformProps(props: ImageCropContainerProps): ImageCropProps {
         return {
-            imageSource: "systemImage",
-            imageUrl: this.getImage(props),
-            keepSelection: this.props.keepSelection,
+            imageUrl: "",
             minWidth: props.minWidth,
             minHeight: props.minHeight,
             maxWidth: props.maxWidth,
@@ -27,26 +22,6 @@ export class preview extends Component<ImageCropContainerProps> {
         };
     }
 
-    private getImage(props: ImageCropContainerProps): string {
-        if (props.source === "staticUrl") {
-            return props.urlStatic || image;
-        } else if (props.source === "staticImage") {
-            return props.imageStatic || image;
-        }
-
-        return image;
-    }
-}
-
-export function getVisibleProperties(valueMap: ImageCropContainerProps, visibilityMap: VisibilityMap) {
-    visibilityMap.dynamicUrlAttribute = valueMap.source === "urlAttribute";
-    visibilityMap.urlStatic = valueMap.source === "staticUrl";
-    visibilityMap.imageStatic = valueMap.source === "staticImage";
-
-    visibilityMap.afterCropMicroflow = valueMap.afterCrop === "callMicroflow";
-    visibilityMap.afterCropNanoflow = valueMap.afterCrop === "callNanoflow";
-
-    return visibilityMap;
 }
 
 export function getPreviewCss() {

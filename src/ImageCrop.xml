@@ -4,34 +4,6 @@
     <description>A responsive image cropping tool for Mendix</description>
     <icon/>
      <properties>
-        <property key="source" type="enumeration" defaultValue="systemImage">
-            <caption>Data source</caption>
-            <category>Data source</category>
-            <description/>
-            <enumerationValues>
-                <enumerationValue key="systemImage">Static image</enumerationValue>
-                <enumerationValue key="urlAttribute">Dynamic URL</enumerationValue>
-                <enumerationValue key="staticUrl">Static URL</enumerationValue>
-            </enumerationValues>
-        </property>
-        <property key="dynamicUrlAttribute" type="attribute" required="false" isPath="optional" pathType="reference">
-            <caption>Dynamic URL attribute</caption>
-            <category>Data source</category>
-            <description>Image URL based on context string attribute</description>
-            <attributeTypes>
-                <attributeType name="String"/>
-            </attributeTypes>
-        </property>
-        <property key="urlStatic" type="string" required="false">
-            <caption>Static URL</caption>
-            <category>Data source</category>
-            <description>The URL of the external image</description>
-        </property>
-        <property key="imageStatic" type="image" required="false">
-            <caption>Static image</caption>
-            <category>Data source</category>
-            <description>The image from the modeler</description>
-        </property>
         <property key="minWidth" type="integer" defaultValue="10">
             <caption>Minimum width</caption>
             <category>Appearance</category>
@@ -51,33 +23,6 @@
             <caption>Maximum height</caption>
             <category>Appearance</category>
             <description/>
-        </property>
-        <property key="keepSelection" type="boolean" defaultValue="true">
-            <caption>Keep Selection</caption>
-            <category>Appearance</category>
-            <description>Choose whether to keep focus if user clicks outside the selection area</description>
-        </property>
-        <property key="afterCrop" type="enumeration" defaultValue="doNothing">
-            <caption>After crop </caption>
-            <category>Events</category>
-            <description/>
-            <enumerationValues>
-                <enumerationValue key="doNothing">Do nothing</enumerationValue>
-                <enumerationValue key="callMicroflow">Call microflow</enumerationValue>
-                <enumerationValue key="callNanoflow">Call nanoflow</enumerationValue>
-            </enumerationValues>
-        </property>
-        <property key="afterCropMicroflow" type="microflow" required="false">
-            <caption>After crop microflow</caption>
-            <category>Events</category>
-            <description>The microflow to call when cropping is done</description>
-            <returnType type="Void"/>
-        </property>
-        <property key="afterCropNanoflow" type="nanoflow" required="false">
-            <caption>After crop nanoflow</caption>
-            <category>Events</category>
-            <description>The nanoflow to call when cropping is done</description>
-            <returnType type="Void"/>
         </property>
     </properties>
 </widget>

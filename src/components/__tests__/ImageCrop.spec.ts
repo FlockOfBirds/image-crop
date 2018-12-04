@@ -12,9 +12,12 @@ describe("Image crop", () => {
         imageUrl: "https://www.w3schools.com/css/paris.jpg",
         minWidth: 10,
         maxWidth: 10,
+        positionX: 0,
+        positionY: 0,
+        readOnly: false,
         handleCropEnd: jasmine.any(Function)
     };
-    const crop = { x: 10, y: 10, width: 10, height: undefined };
+    const crop = { aspect: 0, height: undefined, width: 10, x: 0, y: 0 };
 
     it("renders the structure correctly", () => {
         const imageCrop = renderImageCrop(defaultProps);

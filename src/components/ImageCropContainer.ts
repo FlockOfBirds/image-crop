@@ -10,15 +10,17 @@ export interface WrapperProps {
     friendlyId: string;
     mxObject: mendix.lib.MxObject;
     mxform: mxui.lib.form._FormBase;
+    readOnly: boolean;
     style?: string;
 }
 
 export interface ImageCropContainerProps extends WrapperProps {
-    keepSelection: boolean;
     minWidth: number;
     minHeight: number;
     maxWidth: number;
     maxHeight: number;
+    positionX: number;
+    positionY: number;
 }
 
 export interface ImageCropContainerState {
@@ -44,13 +46,11 @@ class ImageCropContainer extends Component<ImageCropContainerProps, ImageCropCon
         }
 
         return createElement(ImageCrop, {
+            ...this.props as ImageCropContainerProps,
             className: this.props.class,
-            imageUrl: this.state.imageUrl,
-            maxHeight: this.props.maxHeight,
-            maxWidth: this.props.maxWidth,
-            minHeight: this.props.minHeight,
-            minWidth: this.props.minWidth,
+            readOnly: this.isReadOnly(),
             handleCropEnd: this.handleCropEnd,
+            imageUrl: this.state.imageUrl,
             style: Helper.parseStyle(this.props.style)
         });
     }
@@ -77,6 +77,10 @@ class ImageCropContainer extends Component<ImageCropContainerProps, ImageCropCon
 
     private handleCropEnd = (croppedImage: Blob) => {
         this.setState({ croppedImage });
+    }
+
+    private isReadOnly(): boolean {
+        return !this.props.mxObject || this.props.readOnly;
     }
 
     private saveImage = (callback: () => void) => {
@@ -113,7 +117,7 @@ class ImageCropContainer extends Component<ImageCropContainerProps, ImageCropCon
         if (mxObject && mxObject.get("HasContents")) {
             const url = window.mx.data.getDocumentUrl(mxObject.getGuid(), mxObject.get("changedDate") as number);
             window.mx.data.getImageUrl(url,
-                objectUrl => this.setState({ imageUrl: objectUrl })
+                imageUrl => this.setState({ imageUrl })
             );
         } else {
             this.setState({ imageUrl: "" });

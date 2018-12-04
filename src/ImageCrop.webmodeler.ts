@@ -4,7 +4,7 @@ import { ImageCropContainerProps } from "./components/ImageCropContainer";
 
 declare function require(name: string): string;
 
-// const image = "base64-image-loader!./img/imageviewerpreview.png";
+const image = "base64-image-loader!./img/imagecroppreview.png";
 
 // tslint:disable-next-line class-name
 export class preview extends Component<ImageCropContainerProps> {
@@ -14,11 +14,14 @@ export class preview extends Component<ImageCropContainerProps> {
 
     private transformProps(props: ImageCropContainerProps): ImageCropProps {
         return {
-            imageUrl: "",
+            imageUrl: image,
+            readOnly: false,
             minWidth: props.minWidth,
             minHeight: props.minHeight,
             maxWidth: props.maxWidth,
-            maxHeight: props.maxHeight
+            maxHeight: props.maxHeight,
+            positionX: props.positionX,
+            positionY: props.positionY
         };
     }
 

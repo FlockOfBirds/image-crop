@@ -23,68 +23,63 @@ export interface Crop {
 
 export interface ImageCropProps {
     className?: string;
-    editable?: boolean;
+    readOnly: boolean;
     handleCropEnd?: (imageUrl: Blob) => void;
     imageUrl: string;
     minWidth?: number;
     minHeight?: number;
     maxWidth?: number;
     maxHeight?: number;
+    positionX: number;
+    positionY: number;
     style?: object;
 }
 
 export interface ImageCropState {
     crop: Crop;
-    croppedImageUrl: string;
 }
 
 export class ImageCrop extends Component<ImageCropProps, ImageCropState> {
     private imageRef: HTMLImageElement;
 
-    constructor(props: ImageCropProps) {
-        super(props);
-        this.state = {
-            crop: {
-                x: 10,
-                y: 10,
-                width: props.minWidth,
-                height: props.minHeight
-            },
-            croppedImageUrl: ""
-        };
-
-        this.onImageLoaded = this.onImageLoaded.bind(this);
-        this.onCropComplete = this.onCropComplete.bind(this);
-        this.onCropChange = this.onCropChange.bind(this);
-    }
+    readonly state = {
+        crop: {
+            aspect: 0,
+            height: this.props.minHeight,
+            width: this.props.minWidth,
+            x: this.props.positionX,
+            y: this.props.positionY
+        }
+    };
 
     render() {
         return createElement(ReactCrop, {
             className: classNames("widget-image-crop", this.props.className),
-            src: this.props.imageUrl,
             crop: this.state.crop,
+            disabled: this.props.readOnly,
             keepSelection: true,
             onImageLoaded: this.onImageLoaded,
             onComplete: this.onCropComplete,
-            onChange: this.onCropChange
+            onChange: this.onCropChange,
+            src: this.props.imageUrl
         });
     }
 
-    private onImageLoaded(image: HTMLImageElement) {
+    private onImageLoaded = (image: HTMLImageElement) => {
          this.imageRef = image;
     }
 
-    private onCropChange(crop: Crop, _pixelCrop: PixelCrop) {
+    private onCropChange = (crop: Crop, _pixelCrop: PixelCrop) => {
         this.setState({ crop });
     }
 
-    private onCropComplete(crop: Crop, pixelCrop: PixelCrop) {
+    private onCropComplete = (crop: Crop, pixelCrop: PixelCrop) => {
         if (crop.width && crop.height && this.props.handleCropEnd) {
             this.getCroppedImg(this.imageRef, pixelCrop)
                 .then(croppedImage =>
                     this.props.handleCropEnd &&
-                    this.props.handleCropEnd(croppedImage)
-                ).catch(error => {
+                    this.props.handleCropEnd(croppedImage))
+                .catch(error => {
                     console.log("An error occurred while converting image data url to blob ", error); // tslint:disable-line
                 });
         }
@@ -108,7 +103,7 @@ export class ImageCrop extends Component<ImageCropProps, ImageCropState> {
             pixelCrop.height
         );
 
-        const url = canvas.toDataURL("image/png");
+        const url = canvas.toDataURL("image/png", 1.0);
 
         return window.fetch(url).then(res => res.blob());
     }

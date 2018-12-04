@@ -4,23 +4,33 @@
     <description>A responsive image cropping tool for Mendix</description>
     <icon/>
      <properties>
-        <property key="minWidth" type="integer" defaultValue="10">
-            <caption>Minimum width</caption>
+        <property key="positionX" type="integer" defaultValue="0">
+            <caption>Initial crop X position</caption>
             <category>Appearance</category>
             <description/>
         </property>
-        <property key="minHeight" type="integer" defaultValue="10">
-            <caption>Minimum height</caption>
+        <property key="positionY" type="integer" defaultValue="0">
+            <caption>Initial crop Y position</caption>
             <category>Appearance</category>
             <description/>
         </property>
-        <property key="maxWidth" type="integer" defaultValue="700">
-            <caption>Maximum width</caption>
+        <property key="minWidth" type="integer" defaultValue="0">
+            <caption>A minimum crop width, as a percentage of the image width</caption>
             <category>Appearance</category>
             <description/>
         </property>
-        <property key="maxHeight" type="integer" defaultValue="700">
-            <caption>Maximum height</caption>
+        <property key="minHeight" type="integer" defaultValue="0">
+            <caption>A minimum crop height, as a percentage of the image height</caption>
+            <category>Appearance</category>
+            <description/>
+        </property>
+        <property key="maxWidth" type="integer" defaultValue="100">
+            <caption>A maximum percentage width for a crop to be adjusted</caption>
+            <category>Appearance</category>
+            <description/>
+        </property>
+        <property key="maxHeight" type="integer" defaultValue="100">
+            <caption>A maximum percentage height for a crop to be adjusted</caption>
             <category>Appearance</category>
             <description/>
         </property>

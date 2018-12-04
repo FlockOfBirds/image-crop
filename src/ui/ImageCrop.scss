@@ -1,3 +1,7 @@
 .widget-image-crop {
   cursor: pointer;
+
+  .ReactCrop__image {
+    cursor: crosshair
+  }
 }

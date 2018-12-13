@@ -12,7 +12,7 @@ export class Helper {
             }, {});
         } catch (error) {
             // tslint:disable-next-line no-console
-            window.console.log("Failed to parse style", style, error);
+            window.logger.error("Failed to parse style", style, error);
         }
 
         return {};

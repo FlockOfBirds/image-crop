@@ -1,7 +1,7 @@
 .widget-image-crop {
-  cursor: pointer;
+  cursor: crosshair;
+}
 
-  .ReactCrop__image {
-    cursor: crosshair
-  }
+.ReactCrop--disabled {
+    cursor: not-allowed;
 }

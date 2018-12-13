@@ -30,9 +30,8 @@ export interface ImageCropContainerState {
 }
 
 class ImageCropContainer extends Component<ImageCropContainerProps, ImageCropContainerState> {
-
     private subscriptionHandles: number[] = [];
-    private formHandle?: number;
+    private formHandle = 0;
 
     readonly state: ImageCropContainerState = {
         alertMessage: "",
@@ -86,13 +85,9 @@ class ImageCropContainer extends Component<ImageCropContainerProps, ImageCropCon
     private saveImage = (callback: () => void) => {
         const { mxObject } = this.props;
         const filename = mxObject.get("Name") as string;
-
         if (this.state.croppedImage && mxObject.inheritsFrom("System.Image")) {
-            mx.data.saveDocument(mxObject.getGuid(), filename, {},
-                this.state.croppedImage,
-                callback,
-                error => mx.ui.error("Error saving image crop: " + error.message)
-            );
+            mx.data.saveDocument(mxObject.getGuid(), filename,
+            {}, this.state.croppedImage, callback, error => mx.ui.error("Error saving image crop: " + error.message));
         } else {
             callback();
         }
@@ -116,9 +111,7 @@ class ImageCropContainer extends Component<ImageCropContainerProps, ImageCropCon
     private setImageUrl(mxObject?: mendix.lib.MxObject) {
         if (mxObject && mxObject.get("HasContents")) {
             const url = window.mx.data.getDocumentUrl(mxObject.getGuid(), mxObject.get("changedDate") as number);
-            window.mx.data.getImageUrl(url,
-                imageUrl => this.setState({ imageUrl })
-            );
+            window.mx.data.getImageUrl(url, imageUrl => this.setState({ imageUrl }));
         } else {
             this.setState({ imageUrl: "" });
         }

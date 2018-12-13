@@ -6,10 +6,9 @@ import { ImageCrop, ImageCropProps } from "../ImageCrop";
 
 describe("Image crop", () => {
     const renderImageCrop = (props: ImageCropProps) => shallow(createElement(ImageCrop, props as ImageCropProps));
-    // const fullRenderImageCrop = (props: ImageCropProps) => mount(createElement(ImageCrop, props as ImageCropProps));
 
     const defaultProps: ImageCropProps = {
-        imageUrl: "https://www.w3schools.com/css/paris.jpg",
+        imageUrl: "http://localhost:8180/img/MyFirstModule$Best_Nature_Full_HD_Images_For_Desktop.jpg?636802895006660706", // "https://imagecrop-sandbox.mxapps.io/
         minWidth: 10,
         maxWidth: 10,
         positionX: 0,
@@ -49,10 +48,10 @@ describe("Image crop", () => {
 
         const imageLoadedSpy = spyOn(imageCropInstance, "onImageLoaded").and.callThrough();
         const cropCompleteSpy = spyOn(imageCropInstance, "onCropComplete").and.callThrough();
-        const cropChangeSpy = spyOn(imageCropInstance, "onCropChange").and.callThrough();
+        const cropChangeSpy = spyOn(imageCropInstance, "onChange").and.callThrough();
 
         imageCropInstance.onImageLoaded(imageCropInstance.imageRef);
-        imageCropInstance.onCropChange(newCrop);
+        imageCropInstance.onChange(newCrop);
         imageCropInstance.onCropComplete(newCrop, pixelCrop);
 
         expect(cropChangeSpy).toHaveBeenCalled();

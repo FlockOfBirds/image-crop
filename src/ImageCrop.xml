@@ -5,34 +5,34 @@
     <icon/>
      <properties>
         <property key="positionX" type="integer" defaultValue="0">
-            <caption>Initial crop X position</caption>
+            <caption>Position X</caption>
             <category>Appearance</category>
-            <description/>
+            <description>The X position of initial crop coordinate (in px)</description>
         </property>
         <property key="positionY" type="integer" defaultValue="0">
-            <caption>Initial crop Y position</caption>
+            <caption>Position Y</caption>
             <category>Appearance</category>
-            <description/>
+             <description>The Y position of initial crop coordinate (in px)</description>
         </property>
         <property key="minWidth" type="integer" defaultValue="0">
-            <caption>A minimum crop width, as a percentage of the image width</caption>
+            <caption>Minimum width</caption>
             <category>Appearance</category>
-            <description/>
+            <description>The initial minimum width that the cropped image can be</description>
         </property>
         <property key="minHeight" type="integer" defaultValue="0">
-            <caption>A minimum crop height, as a percentage of the image height</caption>
+            <caption>Minimum height</caption>
             <category>Appearance</category>
-            <description/>
+            <description>The initial minimum height that the cropped image can be</description>
         </property>
         <property key="maxWidth" type="integer" defaultValue="100">
-            <caption>A maximum percentage width for a crop to be adjusted</caption>
+            <caption>Maximum width</caption>
             <category>Appearance</category>
-            <description/>
+            <description>The maximum width that the image cropper can become</description>
         </property>
         <property key="maxHeight" type="integer" defaultValue="100">
-            <caption>A maximum percentage height for a crop to be adjusted</caption>
+            <caption>Maximum height</caption>
             <category>Appearance</category>
-            <description/>
+            <description>The maximum height that the image cropper can become</description>
         </property>
     </properties>
 </widget>

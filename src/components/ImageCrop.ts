@@ -60,8 +60,9 @@ export class ImageCrop extends Component<ImageCropProps, ImageCropState> {
             keepSelection: true,
             onImageLoaded: this.onImageLoaded,
             onComplete: this.onCropComplete,
-            onChange: this.onCropChange,
-            src: this.props.imageUrl
+            onChange: this.onChange,
+            src: this.props.imageUrl,
+            style: this.props.style
         });
     }
 
@@ -69,7 +70,7 @@ export class ImageCrop extends Component<ImageCropProps, ImageCropState> {
          this.imageRef = image;
     }
 
-    private onCropChange = (crop: Crop, _pixelCrop: PixelCrop) => {
+    private onChange = (crop: Crop) => {
         this.setState({ crop });
     }
 
@@ -80,7 +81,7 @@ export class ImageCrop extends Component<ImageCropProps, ImageCropState> {
                     this.props.handleCropEnd &&
                     this.props.handleCropEnd(croppedImage))
                 .catch(error => {
-                    console.log("An error occurred while converting image data url to blob ", error); // tslint:disable-line
+                    window.mx.ui.error("An error occurred while converting image data url to blob ", error);
                 });
         }
     }

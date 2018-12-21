@@ -8,15 +8,14 @@ describe("Image crop", () => {
     const renderImageCrop = (props: ImageCropProps) => shallow(createElement(ImageCrop, props as ImageCropProps));
 
     const defaultProps: ImageCropProps = {
-        imageUrl: "http://localhost:8180/img/MyFirstModule$Best_Nature_Full_HD_Images_For_Desktop.jpg?636802895006660706", // "https://imagecrop-sandbox.mxapps.io/
-        minWidth: 10,
-        maxWidth: 10,
-        positionX: 0,
-        positionY: 0,
+        imageUrl: "https://www.mendix.com/ui/svg/logo-mendix.svg",
         readOnly: false,
-        handleCropEnd: jasmine.any(Function)
+        handleCropEnd: jasmine.any(Function),
+        preselect: true,
+        aspectRatioHorizontal: 0,
+        aspectRatioVertical: 0
     };
-    const crop = { aspect: 0, height: undefined, width: 10, x: 0, y: 0 };
+    const crop = { aspect: 0, x: 0, y: 0 };
 
     it("renders the structure correctly", () => {
         const imageCrop = renderImageCrop(defaultProps);
@@ -34,7 +33,7 @@ describe("Image crop", () => {
         );
     });
 
-    it("renders with an initial cropper frame position when an image src is provided", () => {
+    it("should call on change and on complete callbacks when a crop is changed", () => {
         const wrapper = renderImageCrop(defaultProps);
         const imageCropInstance = wrapper.instance() as any;
         const newImage = document.createElement("img") as HTMLImageElement;
@@ -44,9 +43,13 @@ describe("Image crop", () => {
         newImage.src = defaultProps.imageUrl;
         imageCropInstance.imageRef = newImage;
         wrapper.setState({ crop });
-        wrapper.setProps({ handleCropEnd: () => jasmine.any(Function) });
+        wrapper.setProps({
+            handleCropEnd: () => jasmine.any(Function),
+            preselect: false,
+            aspectRatioHorizontal: 5,
+            aspectRatioVertical: 12
+        });
 
-        const imageLoadedSpy = spyOn(imageCropInstance, "onImageLoaded").and.callThrough();
         const cropCompleteSpy = spyOn(imageCropInstance, "onCropComplete").and.callThrough();
         const cropChangeSpy = spyOn(imageCropInstance, "onChange").and.callThrough();
 
@@ -56,6 +59,39 @@ describe("Image crop", () => {
 
         expect(cropChangeSpy).toHaveBeenCalled();
         expect(cropCompleteSpy).toHaveBeenCalled();
+    });
+
+    it("calls the image load callback when the image is loaded", () => {
+        const wrapper = renderImageCrop(defaultProps);
+        const imageCropInstance = wrapper.instance() as any;
+        const newImage = document.createElement("img") as HTMLImageElement;
+
+        newImage.src = defaultProps.imageUrl;
+        newImage.width = 20;
+        newImage.height = 15;
+        imageCropInstance.imageRef = newImage;
+        wrapper.setState({ crop });
+
+        const imageLoadedSpy = spyOn(imageCropInstance, "onImageLoaded").and.callThrough();
+        imageCropInstance.onImageLoaded(imageCropInstance.imageRef);
+
         expect(imageLoadedSpy).toHaveBeenCalled();
+    });
+
+    it("renders with a pre-selected image", () => {
+        const wrapper = renderImageCrop(defaultProps);
+        const imageCropInstance = wrapper.instance() as any;
+        const newImage = document.createElement("img") as HTMLImageElement;
+
+        newImage.src = defaultProps.imageUrl;
+        newImage.width = 10;
+        newImage.height = 15;
+        imageCropInstance.imageRef = newImage;
+        wrapper.setState({ crop });
+
+        const cropChangeSpy = spyOn(imageCropInstance, "getAspectRatio").and.callThrough();
+        imageCropInstance.getAspectRatio(imageCropInstance.imageRef);
+
+        expect(cropChangeSpy).toHaveBeenCalled();
     });
 });

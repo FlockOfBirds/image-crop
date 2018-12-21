@@ -23,7 +23,8 @@
       "noUnusedLocals": true,
       "noUnusedParameters": true,
       "skipLibCheck": true,
-      "strictNullChecks": true
+      "strictNullChecks": true,
+      "strict": true
     },
     "exclude": [
       "dist/",

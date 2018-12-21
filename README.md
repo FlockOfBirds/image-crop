@@ -11,12 +11,10 @@ A responsive image cropping tool for Mendix
 ![Apprearance](/assets/Appearance.PNG)
 
 ### Configuration properties
-* **Position X** - The X position of initial crop coordinate (in px).
-* **Position Y** - The Y position of initial crop coordinate (in px).
-* **Minimum width** - The initial minimum width that the cropped image can be.
-* **Minimum height** - The initial minimum height that the cropped image can be.
-* **Maximum width** - The maximum width that the image cropper can become.
-* **Maximum height** - The maximum height that the image cropper can become.
+
+* **preselect** - Sets an initial crop based on 'Aspect ratio horizontal' and 'Aspect ratio vertical' if one of the them is 0, default will be square.
+* **aspectRatioHorizontal**
+* **aspectRatioVertical**
 
 ## Compatibility
 The widget is usable and works smoothly in Google chrome, Internet explorer. 

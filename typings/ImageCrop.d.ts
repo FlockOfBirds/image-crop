@@ -1,17 +1,17 @@
 declare module "react-image-crop" {
-    interface PixelCrop {
-        x: number;
-        y: number;
-        width: number;
-        height: number;
-    }
-
     interface Crop {
         aspect?: number;
         x: number;
         y: number;
         width?: number;
         height?: number;
+    }
+
+    interface PixelCrop {
+        x: number;
+        y: number;
+        width: number;
+        height: number;
     }
 
     export function makeAspectCrop(crop: Crop, imageAspect: number): Crop;
@@ -25,12 +25,12 @@ declare module "react-image-crop" {
         maxWidth?: number;
         maxHeight?: number;
         keepSelection?: boolean;
-        onChange?: (crop: Crop, pixelCrop: PixelCrop) => void;
+        onChange: (crop: Crop, pixelCrop: PixelCrop) => void;
         onComplete?: (crop: Crop, pixelCrop: PixelCrop) => void;
-        onImageLoaded?: (target: HTMLImageElement, crop: Crop) => void;
-        onDragStart?: (crop: Crop, pixelCrop: PixelCrop) => void;
-        onDragEnd?: (crop: Crop, pixelCrop: PixelCrop) => void;
-        onImageError?: (event: any) => void;
+        onImageLoaded?: (target: HTMLImageElement, pixelCrop: PixelCrop) => void;
+        onImageError?: (event: Event) => void;
+        onDragStart?: () => void;
+        onDragEnd?: () => void;
         disabled?: boolean;
         crossorigin?: string;
         children?: ReactNode;

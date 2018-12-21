@@ -3,7 +3,7 @@ import { hot } from "react-hot-loader";
 import { Alert } from "./Alert";
 
 import { ImageCrop } from "./ImageCrop";
-import { Helper } from "../utils/Helper";
+import { parseStyle, validateProps } from "../utils/Helper";
 
 export interface WrapperProps {
     class: string;
@@ -15,18 +15,15 @@ export interface WrapperProps {
 }
 
 export interface ImageCropContainerProps extends WrapperProps {
-    minWidth: number;
-    minHeight: number;
-    maxWidth: number;
-    maxHeight: number;
-    positionX: number;
-    positionY: number;
+    aspectRatioHorizontal: number;
+    aspectRatioVertical: number;
+    preselect: boolean;
 }
 
 export interface ImageCropContainerState {
     alertMessage: string;
     imageUrl: string;
-    croppedImage: Blob;
+    croppedImage?: Blob;
 }
 
 class ImageCropContainer extends Component<ImageCropContainerProps, ImageCropContainerState> {
@@ -41,30 +38,29 @@ class ImageCropContainer extends Component<ImageCropContainerProps, ImageCropCon
 
     render() {
         if (this.state.alertMessage) {
-            return createElement(Alert, { className: "widget-image-crop-alert" }, this.state.alertMessage);
+            return createElement(Alert, { className: "widget-image-crop-alert-danger" }, this.state.alertMessage);
         }
 
         return createElement(ImageCrop, {
-            ...this.props as ImageCropContainerProps,
+            aspectRatioHorizontal: this.props.aspectRatioHorizontal,
+            aspectRatioVertical: this.props.aspectRatioVertical,
             className: this.props.class,
             readOnly: this.isReadOnly(),
             handleCropEnd: this.handleCropEnd,
             imageUrl: this.state.imageUrl,
-            style: Helper.parseStyle(this.props.style)
+            preselect: this.props.preselect,
+            style: parseStyle(this.props.style)
         });
     }
 
     componentDidMount() {
-        this.formHandle = this.props.mxform.listen("commit", callback => this.saveImage(callback));
+        this.formHandle = this.props.mxform.listen("commit", success => this.saveImage(success));
     }
 
     componentWillReceiveProps(newProps: ImageCropContainerProps) {
         this.setImageUrl(newProps.mxObject);
-        const alertMessage = this.validateProps(newProps);
-
-        if (alertMessage) {
-            this.setState({ alertMessage });
-        }
+        this.resetSubscriptions(newProps.mxObject);
+        this.setState({ alertMessage: validateProps(newProps) });
     }
 
     componentWillUnmount() {
@@ -74,38 +70,39 @@ class ImageCropContainer extends Component<ImageCropContainerProps, ImageCropCon
         this.subscriptionHandles.forEach(window.mx.data.unsubscribe);
     }
 
+    private resetSubscriptions(mxObject?: mendix.lib.MxObject) {
+        this.subscriptionHandles.forEach(window.mx.data.unsubscribe);
+        if (mxObject) {
+            window.mx.data.subscribe({
+                callback: () => this.setImageUrl(mxObject),
+                guid: mxObject.getGuid()
+            });
+        }
+    }
+
     private handleCropEnd = (croppedImage: Blob) => {
-        this.setState({ croppedImage });
+        if (croppedImage.size) {
+            this.setState({ croppedImage });
+        }
     }
 
     private isReadOnly(): boolean {
         return !this.props.mxObject || this.props.readOnly;
     }
 
-    private saveImage = (callback: () => void) => {
+    private saveImage = (success: () => void) => {
         const { mxObject } = this.props;
+        const { croppedImage } = this.state;
         const filename = mxObject.get("Name") as string;
-        if (this.state.croppedImage && mxObject.inheritsFrom("System.Image")) {
+
+        if (croppedImage && croppedImage.size > 0 && mxObject.inheritsFrom("System.Image")) {
             mx.data.saveDocument(mxObject.getGuid(), filename,
-            {}, this.state.croppedImage, callback, error => mx.ui.error("Error saving image crop: " + error.message));
+                {}, croppedImage, success,
+                error => mx.ui.error("Error saving image crop: " + error.message)
+            );
         } else {
-            callback();
+            success();
         }
-    }
-
-    private validateProps(props: ImageCropContainerProps): string {
-        const errorMessage: string[] = [];
-        if (props.mxObject && !props.mxObject.inheritsFrom("System.Image")) {
-            errorMessage.push(`${props.friendlyId}: ${props.mxObject.getEntity()} does not inherit from "System.Image.`);
-        }
-        if (errorMessage.length) {
-            const widgetName = props.friendlyId.split(".")[2];
-            const message = `Configuration error in widget - ${widgetName}: ${errorMessage.join(", ")}`;
-
-            return message;
-        }
-
-        return errorMessage.join(", ");
     }
 
     private setImageUrl(mxObject?: mendix.lib.MxObject) {

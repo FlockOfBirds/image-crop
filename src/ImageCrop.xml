@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<widget id="com.mendix.widget.custom.imagecrop.ImageCrop" needsEntityContext="true" offlineCapable="true" xmlns="http://www.mendix.com/widget/1.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mendix.com/widget/1.0/ ../xsd/widget.xsd">
+    <name>Image crop</name>
+    <description>A responsive image cropping tool for Mendix</description>
+    <icon>iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAABzlBMVEUAAAD///+Av/9V1f9gYGBgv/9Vxv9mZmZdXV1duf9VVVViYmJJtv9bW1tVVVVQv/9gYGBLtP9aWlpVuP9Jtv9VVVVKtf9SuP9JkshQt/dNsvdJtvhVVVVXV1dNs/lJsPlXV1dJsfpXV1dKsfpKsPpWVlZMs/dYWFhLsPhLk8lLtPhXV1dIs/hKsvhXV1dKsvlJsPlIsflKs/lIsfpIsvdXV1dKsPhKsPhIsPhJsfhKsfhJsvlIsPlKsflJsvlJsPlIsflLo95IsfdJre5IsfhJsPhJsfhIsvhIsPhKsfhJsflJsfdIsfhJsPhJsfhIsPhJsPhWVlZJsfdVVVVJsfdWVlZJsfdIsfhWVlZJsPhJsfhJsfhWVlZIsfhVVVVVVVVWVlZJsfhIsfhIsPhJsPdVVVVJsPdVVVVIsfdWVlZIsPdJp+hIsPdVVVVJsfdWVlZVVVVIsPdVVVVJsfhWVlZVVVVIsPhVVVVWVlZJsfhKr/NVVVVIsPhVVVVIsfhWVlZVVVVJsPhVVVVIsfhWVlZVVVVJsPhVVVVWVlZIsfhVVVVJsPhKqOpVVVVJsPhWVlZIsfhVVVVIrfNIrvRIrvVIr/VIr/ZIsPdJqOlVVVXDtRLsAAAAknRSTlMAAQQGCAgJCgsLDA0ODg8QEBEREhUVGBkcICEjJCYoKi8xMjQ3O0BDREdHSUpMT1NUVVpfY2RrbnFzdXd4eXp+f4KDiYqLjJGbnJ2hrbW2uLy+wMbHx8jNzc/R1dbX2tvc3d7f4ODj4+Xl5ujp6uvr7O3t7u7v8PDx8vLy8/P09PX29vf3+Pn5+vv7/Pz8/f3+/o4qKmsAAAIHSURBVHgB7ZdXcxMxFIUPpkBC6CT0XgKYTsD03nuB0EOBsBQCoRdCLySYEgpc699ytA7ID2j3Kjx4JuNvxjoPmvuNfa+8s0IpFeqbTRdRFt2hyfwlQnd4YxzlE/RhlkOQjYzFCbx4phQZlcA7JVfS4nTJeARX5rsfFCyAmp4rcE2cfKjFw7EZTpAwxiPGy1knSDhIN40fJ0g4yq06gf/PdJs5oXb2tUKh8HFDrUMtuMscXnVeLJ0z3b5acM8K5kmRXSDLL+4dFigYukKKNAKYy9weIHjAHFzyDTKnmY/66QUPmYNKepATy0K94AlzIKZfZVV+FTDillh26wVPmdUszO1YPwXANol5XaMWPGcOwKiGabBM7GD1Z36WqAUvmP1HXpL8YpA9rD23hcs+teCVFdiStnHAHCELJnHpCBKMfiakMZM5yTgInGCoBTY3SczGZbYBbOXqEMFb5mOJyd/nshPAmBDBe+Y3keuXJaatDuRwgKCd+V1k5axOsayBJRcg+MD8KTeqsFXIhb6w1OX1gk/MH7IW6H2cgkUosl8v+GIFd2oAjD36cjO6aAgT/FqHmF74w5B3asFXxUPVEmU9AqMT0OARRCkvFm7fI8hGia823E8R6OixghRal6Y2MYX26qQxNpl0xicdpPrmIEH4teRMiQAx5RBYyic48L+Xsqmn/t3/Cr8BGcE5EEjwS6MAAAAASUVORK5CYII=</icon>
+     <properties>
+        <property key="preselect" type="boolean" defaultValue="true">
+            <caption>Preselect</caption>
+            <category>Appearance</category>
+            <description>Sets an initial crop based on 'Aspect ratio horizontal' and 'Aspect ratio vertical' if one of the them is 0, default will be square</description>
+        </property>
+        <property key="aspectRatioHorizontal" type="integer" defaultValue="0">
+            <caption>Aspect ratio horizontal</caption>
+            <category>Appearance</category>
+            <description/>
+        </property>
+        <property key="aspectRatioVertical" type="integer" defaultValue="0">
+            <caption>Aspect ratio vertical</caption>
+            <category>Appearance</category>
+            <description/>
+        </property>
+    </properties>
+</widget>
